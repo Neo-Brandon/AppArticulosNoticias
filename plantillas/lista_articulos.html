@@ -1,0 +1,31 @@
+<!--plantillas/lista_articulos.html-->
+
+ {% extends 'base.html' %}
+
+ {% block titulo %}Articulos{% endblock titulo %}
+ {% block contenido %}
+ {% for articulo in articulo_list %}
+   <div class="card">
+     <div class="card-header"></div>
+       <span class="font-weight-bold">{{ articulo.titulo }}</span>&middot;
+       <span class="text-muted">por {{ articulo.autor }} | {{ articulo.fecha }}</span>
+     </div>
+     <div class="card-body">
+        <p>{{ articulo.contenido }}</p>
+        <a href="{% url 'edicion_articulo' articulo.pk %}">Editar</a> | <a href="{% url 'eliminacion_articulo' articulo.pk %}">Eliminar</a>
+     </div>
+     <div class="card-footer text-center text-muted">
+         {% for comentario in articulo.comentario_set.all %}
+         <p>
+            <span class="font-weight-bold">
+              {{ comentario.autor }} &middot;
+            </span>
+            {{ comentario }}
+         </p>
+         {% endfor %}
+     </div>
+   </div>
+
+   <br> 
+   {% endfor %}
+   {% endblock contenido %}

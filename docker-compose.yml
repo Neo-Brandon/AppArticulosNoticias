@@ -13,6 +13,9 @@ services:
     environment:
       - DJANGO_SECRET_KEY=django-insecure-vjuc$d50zj5143tvk895g1v+(mebotv!rh!^ijk0s(w6&sv9@@
       - DJANGO_DEBUG=False
+      - PAYPAL_MODE=sandbox
+      - PAYPAL_CLIENT_ID=AbtPgwSybv7Qk5j9qC2BSi_SHRRoPQXEpWoHrkUIf9rZfvBJSsuaof7341MPFUuCB7H4PCyaHLvVxmUh
+      - PAYPAL_CLIENT_SECRET=EJoTLyzs9XwdJdtND7FVoDjNczzKKy_8WaWbsUnGvLmgIgJjlWJmnbuv7GBxcaP6S28zgS-WyES9eGaK
   db:
     image: postgres:13
     volumes:
