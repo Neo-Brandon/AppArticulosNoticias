@@ -1,0 +1,13 @@
+<!--plantillas/edicion_articulo.html-->
+
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block contenido %}
+   <h1>Edicion</h1>
+   <form action="" method="post">{% csrf_token %}
+    {{ form|crispy }}
+    <button class="btn btn-info ml-2" type="submit">Editar</button>
+   </form>
+
+   {% endblock contenido %}

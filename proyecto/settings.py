@@ -52,6 +52,8 @@ INSTALLED_APPS = [
     # Locales
     'cuentas.apps.CuentasConfig',
     'paginas.apps.PaginasConfig',
+    'articulos.apps.ArticulosConfig',
+    'noticias.apps.NoticiasConfig',
 ]
 
 MIDDLEWARE = [
@@ -156,10 +158,16 @@ AUTHENTICATION_BACKENDS = (
 EMAIL_BACKEND = 'django.core.mail.backends.console.Email.Backend'
 LOGIN_REDIRECT_URL = 'inicio'
 ACCOUNT_LOGOUT_REDIRECT = 'inicio'
-
+ 
 ACOUNT_SESSION_REMEMBER_URL = True
 ACOUNT_SIGNUP_PASSWORD_ENTER_TWICE = False
 ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_ATHENTICATED_METHOD = 'email'
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_UNIQUE_EMAIL = True
+
+
+# Configuración de PayPal
+PAYPAL_CLIENT_ID = env('PAYPAL_CLIENT_ID', default='AbtPgwSybv7Qk5j9qC2BSi_SHRRoPQXEpWoHrkUIf9rZfvBJSsuaof7341MPFUuCB7H4PCyaHLvVxmUh')  # Añade tu CLIENT_ID
+PAYPAL_CLIENT_SECRET = env('PAYPAL_CLIENT_SECRET', default='EJoTLyzs9XwdJdtND7FVoDjNczzKKy_8WaWbsUnGvLmgIgJjlWJmnbuv7GBxcaP6S28zgS-WyES9eGaK')  # Añade tu CLIENT_SECRET
+PAYPAL_MODE = env('PAYPAL_MODE', default='sandbox')  # Cambia a 'live' cuando estés listo para producción
