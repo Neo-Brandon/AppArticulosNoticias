@@ -23,6 +23,6 @@ urlpatterns = [
     path('cuentas/', include('allauth.urls')),
     # Aplicaciones locales
     path('', include('paginas.urls')),
-    path('cuentas/', include('cuentas.urls')),
+    #path('cuentas/', include('cuentas.urls')),
     path('articulos/', include('articulos.urls')),
 ]

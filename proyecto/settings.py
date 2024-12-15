@@ -27,7 +27,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = env('DJANGO_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env.bool('DJANGO_DEBUG')
+#DEBUG = env.bool('DJANGO_DEBUG')
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -151,20 +152,37 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 SITE_ID = 1
 
 AUTHENTICATION_BACKENDS = (
-    'django.contrib.auth.backends.ModelBackend',
-    'allauth.account.auth_backends.AuthenticationBackend',
+    'django.contrib.auth.backends.ModelBackend',  # Backend predeterminado de Django
+    'allauth.account.auth_backends.AuthenticationBackend',  # Backend de allauth
 )
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.Email.Backend'
+# Backend para el envío de correos
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+# Redirección después de iniciar sesión
 LOGIN_REDIRECT_URL = 'inicio'
-ACCOUNT_LOGOUT_REDIRECT = 'inicio'
- 
-ACOUNT_SESSION_REMEMBER_URL = True
-ACOUNT_SIGNUP_PASSWORD_ENTER_TWICE = False
+
+# Redirección después de cerrar sesión
+ACCOUNT_LOGOUT_REDIRECT_URL = 'inicio'
+
+# Recordar sesión automáticamente
+ACCOUNT_SESSION_REMEMBER = True
+
+# No pedir contraseña dos veces durante el registro
+ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = False
+
+# No requerir nombre de usuario
 ACCOUNT_USERNAME_REQUIRED = False
-ACCOUNT_ATHENTICATED_METHOD = 'email'
+
+# Método de autenticación: solo por correo electrónico
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+
+# Correo electrónico requerido para registrarse
 ACCOUNT_EMAIL_REQUIRED = True
+
+# Asegurarse de que los correos electrónicos sean únicos
 ACCOUNT_UNIQUE_EMAIL = True
+
 
 
 # Configuración de PayPal
