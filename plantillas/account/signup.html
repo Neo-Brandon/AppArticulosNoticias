@@ -1,14 +1,15 @@
 {% extends 'base.html' %}
+{% load crispy_forms_tags %}
 
 
 {% block titulo %} - Registro{% endblock titulo %}
-
 
 {% block contenido %}
     <h2>Registro</h2>
     <form action="" method="post">
         {% csrf_token %}
-        {{ form.as_p }}
-        <button class="btn btn-success" type="submit">Registro</button>
+        <!-- Usando crispy-forms para aplicar los estilos de Bootstrap -->
+        {{ form|crispy }}
+        <button class="btn btn-success" type="submit">Registrar</button>
     </form>
 {% endblock contenido %}
