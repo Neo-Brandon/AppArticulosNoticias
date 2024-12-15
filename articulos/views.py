@@ -2,7 +2,7 @@ from django.views.generic import ListView, DetailView
 from django.views.generic.edit import UpdateView, DeleteView, CreateView, FormMixin
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse_lazy, reverse
-from .models import Articulo
+from .models import Articulo, Categoria
 from .forms import FormularioComentario
 
 # Vista para listar los artículos
@@ -57,9 +57,10 @@ class VistaEliminacionArticulo(LoginRequiredMixin, UserPassesTestMixin, DeleteVi
 class VistaCreacionArticulo(LoginRequiredMixin, CreateView):
     model = Articulo
     template_name = 'nuevo_articulo.html'
-    fields = ('titulo', 'contenido')
+    fields = ('titulo', 'contenido', 'categoria')
     success_url = reverse_lazy('lista_articulos')
 
     def form_valid(self, form):
         form.instance.autor = self.request.user
         return super().form_valid(form)
+
