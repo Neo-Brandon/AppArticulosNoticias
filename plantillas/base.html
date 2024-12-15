@@ -154,20 +154,7 @@
         {% endblock contenido %}
     </main>
 
-    {% if request.path == '/accounts/login/' or request.path == '/accounts/signup/' %}
-    <div class="d-flex flex-column mt-3">
-        <!-- Botón para iniciar sesión con Google -->
-        <a href="{% url 'google_login' %}" class="btn btn-outline-dark auth-btn">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Google.png" alt="Google Logo">
-            Iniciar sesión con Google
-        </a>
-        <!-- Botón para iniciar sesión con Facebook -->
-        <a href="{% url 'facebook_login' %}" class="btn btn-outline-primary auth-btn">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" alt="Facebook Logo">
-            Iniciar sesión con Facebook
-        </a>
-    </div>
-    {% endif %}
+    
 
     {% if request.path == '/' %}
     <!-- Carrusel de suscripción con control manual -->
