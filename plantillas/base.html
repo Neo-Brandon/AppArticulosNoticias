@@ -8,55 +8,79 @@
           integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" 
           crossorigin="anonymous">
 
-          <style>
-            .acceso-btn {
-                background-color: #7495E9;
-                /* Color de fondo personalizado */
-                color: white;
-                /* Color del texto */
-                border: none;
-            }
-    
-            .acceso-btn:hover {
-                background-color: #5d77b8;
-                /* Color al hacer hover */
-                color: #ffffff;
-                /* Color del texto */
-            }
+    <style>
+        .acceso-btn {
+            background-color: #7495E9;
+            color: white;
+            border: none;
+        }
 
-            .btn-outline-custom {
-                color: #5d77b8; /* Color del texto y borde */
-                border-color: #5d77b8; /* Borde personalizado */
-            }
-            
-            .btn-outline-custom:hover {
-                color: #fff; /* Color del texto al hacer hover */
-                background-color: #4e68aa; /* Fondo al hacer hover */
-                border-color: #4e68aa; /* Borde al hacer hover */
-            }
-            
-            .publica-btn {
-                background-color: #5d77b8;
-                /* Color de fondo personalizado */
-                color: white;
-                /* Color del texto */
-                border: none;
-            }
-    
-            .publica-btn:hover {
-                background-color: #acaf0a;
-                /* Color al hacer hover */
-                color: #ffffff;
-                /* Color del texto */
-            }
-          </style>
+        .acceso-btn:hover {
+            background-color: #5d77b8;
+            color: #ffffff;
+        }
+
+        .btn-outline-custom {
+            color: #5d77b8;
+            border-color: #5d77b8;
+        }
+        
+        .btn-outline-custom:hover {
+            color: #fff;
+            background-color: #4e68aa;
+            border-color: #4e68aa;
+        }
+
+        .publica-btn {
+            background-color: #5d77b8;
+            color: white;
+            border: none;
+        }
+
+        .publica-btn:hover {
+            background-color: #acaf0a;
+            color: #ffffff;
+        }
+
+        .suscripcion-anuncio {
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+            padding: 15px;
+            margin-top: 50px;
+            text-align: center;
+        }
+
+        .suscripcion-anuncio button {
+            background-color: #7495E9;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+        }
+
+        .suscripcion-anuncio button:hover {
+            background-color: #5d77b8;
+        }
+
+        /* Estilo del carrusel */
+        .carousel-item {
+            text-align: center;
+        }
+
+        .carousel-control-prev-icon, .carousel-control-next-icon {
+            background-color: black; 
+        }
+
+        .carousel-control-prev-icon:hover, .carousel-control-next-icon:hover {
+            background-color: #333; 
+        }
+    </style>
 </head>
 <body>
-    
-
     <header class="container-fluid d-flex justify-content-between align-items-center p-3 bg-white shadow-sm">
         <!-- Sección izquierda (Logo) -->
-        <span>{{ fecha_hora_actual }}</span> <!-- Aquí se muestra la hora -->
+        <span>{{ fecha_hora_actual }}</span>
 
         <!-- Botón Nueva -->
         <a href="{% url 'nuevo_articulo' %}" class="btn publica-btn me-3"> Publicar un articulo/noticia</a>
@@ -65,7 +89,6 @@
         <div>
             {% if user.is_authenticated %}
             <div class="d-flex align-items-center">
-                
                 <!-- Dropdown Usuario -->
                 <div class="dropdown text-end">
                     <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" 
@@ -86,16 +109,70 @@
             {% endif %}
         </div>
     </header>
-    
 
     <main>
         <div class="container-xxl d-flex flex-column justify-content-center align-items-center">
             <h1 class="" style="padding-top: 25px;">InformaTech</h1>
         </div>
-    {% block contenido %}
 
-    {% endblock contenido %}
+        {% block contenido %}
+
+        {% endblock contenido %}
     </main>
+
+    <!-- Carrusel de suscripción con control manual -->
+    <div id="suscripcionCarrusel" class="carousel slide" data-bs-ride="false">
+        <div class="carousel-inner">
+            <!-- Opción 1 -->
+            <div class="carousel-item active">
+                <div class="suscripcion-anuncio">
+                    <h3>Suscripción Básica</h3>
+                    <p>Accede a artículos y contenido exclusivo.</p>
+                    <h4>$5 / mes</h4>
+                    <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+                        <input type="hidden" name="cmd" value="_s-xclick">
+                        <input type="hidden" name="hosted_button_id" value="TU_CODIGO_DE_BOTON_PAYPAL">
+                        <button type="submit">Suscribirse</button>
+                    </form>
+                </div>
+            </div>
+            <!-- Opción 2 -->
+            <div class="carousel-item">
+                <div class="suscripcion-anuncio">
+                    <h3>Suscripción Premium</h3>
+                    <p>Accede a contenido exclusivo, artículos premium y más recursos.</p>
+                    <h4>$10 / mes</h4>
+                    <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+                        <input type="hidden" name="cmd" value="_s-xclick">
+                        <input type="hidden" name="hosted_button_id" value="TU_CODIGO_DE_BOTON_PAYPAL">
+                        <button type="submit">Suscribirse</button>
+                    </form>
+                </div>
+            </div>
+            <!-- Opción 3 -->
+            <div class="carousel-item">
+                <div class="suscripcion-anuncio">
+                    <h3>Suscripción VIP</h3>
+                    <p>Accede a contenido exclusivo, artículos premium, recursos y soporte prioritario.</p>
+                    <h4>$20 / mes</h4>
+                    <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+                        <input type="hidden" name="cmd" value="_s-xclick">
+                        <input type="hidden" name="hosted_button_id" value="TU_CODIGO_DE_BOTON_PAYPAL">
+                        <button type="submit">Suscribirse</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#suscripcionCarrusel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Anterior</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#suscripcionCarrusel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Siguiente</span>
+        </button>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>
