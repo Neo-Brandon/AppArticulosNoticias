@@ -42,6 +42,7 @@
             color: #ffffff;
         }
 
+        /* Estilo para el anuncio de suscripción */
         .suscripcion-anuncio {
             background-color: #f8d7da;
             border: 1px solid #f5c6cb;
@@ -68,19 +69,53 @@
             text-align: center;
         }
 
+        /* Personalización de las flechas de navegación a color negro */
         .carousel-control-prev-icon, .carousel-control-next-icon {
-            background-color: black; 
+            background-color: black; /* Flechas de navegación negras */
         }
 
+        /* Opcional: cambia la opacidad de las flechas cuando se pasa el mouse por encima */
         .carousel-control-prev-icon:hover, .carousel-control-next-icon:hover {
-            background-color: #333; 
+            background-color: #333; /* Gris oscuro */
+        }
+
+        /* Estilo de los botones de autenticación con Google y Facebook */
+        .auth-btn {
+            width: auto;
+            margin-top: 10px;
+            padding: 10px 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-left: auto;
+            margin-right: auto;
+            border-radius: 25px;
+        }
+
+        .auth-btn img {
+            width: 30px;
+            margin-right: 10px;
+        }
+
+        /* Estilo para el logo en el header */
+        #logo {
+            display: flex;
+            align-items: center;
+        }
+
+        #logo img {
+            width: 50px;
+            height: auto;
+            cursor: pointer;
         }
     </style>
 </head>
 <body>
     <header class="container-fluid d-flex justify-content-between align-items-center p-3 bg-white shadow-sm">
-        <!-- Sección izquierda (Logo) -->
-        <span>{{ fecha_hora_actual }}</span>
+        <!-- Sección izquierda (Logo que redirige a la página principal) -->
+        <a href="/" id="logo">
+            <img src="plantillas/imagenes/descarga.png" alt="Logo">
+        </a>
 
         <!-- Botón Nueva -->
         <a href="{% url 'nuevo_articulo' %}" class="btn publica-btn me-3"> Publicar un articulo/noticia</a>
@@ -116,10 +151,25 @@
         </div>
 
         {% block contenido %}
-
         {% endblock contenido %}
     </main>
 
+    {% if request.path == '/accounts/login/' or request.path == '/accounts/signup/' %}
+    <div class="d-flex flex-column mt-3">
+        <!-- Botón para iniciar sesión con Google -->
+        <a href="{% url 'google_login' %}" class="btn btn-outline-dark auth-btn">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Google.png" alt="Google Logo">
+            Iniciar sesión con Google
+        </a>
+        <!-- Botón para iniciar sesión con Facebook -->
+        <a href="{% url 'facebook_login' %}" class="btn btn-outline-primary auth-btn">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" alt="Facebook Logo">
+            Iniciar sesión con Facebook
+        </a>
+    </div>
+    {% endif %}
+
+    {% if request.path == '/' %}
     <!-- Carrusel de suscripción con control manual -->
     <div id="suscripcionCarrusel" class="carousel slide" data-bs-ride="false">
         <div class="carousel-inner">
@@ -172,6 +222,7 @@
             <span class="visually-hidden">Siguiente</span>
         </button>
     </div>
+    {% endif %}
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
