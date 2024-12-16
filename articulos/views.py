@@ -2,12 +2,13 @@ from django.views.generic import ListView, DetailView, UpdateView, DeleteView, C
 from django.views.generic.edit import FormMixin
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse_lazy, reverse
-from django.shortcuts import redirect
+from django.shortcuts import redirect, render
 from django.contrib import messages
 from django.utils.dateparse import parse_date
 from .models import Articulo, Categoria
 from .forms import FormularioComentario
-
+from django.conf import settings
+from django.contrib.auth.decorators import login_required
 # Vista para la página principal que muestra los artículos
 class VistaInicio(LoginRequiredMixin, ListView):
     model = Articulo
@@ -139,3 +140,10 @@ class VistaEliminacionArticulo(LoginRequiredMixin, UserPassesTestMixin, DeleteVi
 # NUEVA VISTA: Página de opciones de suscripción
 class VistaOpcionesSuscripcion(LoginRequiredMixin, TemplateView):
     template_name = 'suscripciones.html'
+     
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # Agregar las variables de PayPal al contexto para usarlas en la plantilla
+        context['PAYPAL_CLIENT_ID'] = settings.PAYPAL_CLIENT_ID
+        context['PAYPAL_MODE'] = settings.PAYPAL_MODE
+        return context
