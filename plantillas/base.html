@@ -129,14 +129,81 @@
         {% endblock contenido %}
     </main>
 
-    <!-- Botón de suscripción centrado -->
-    {% if request.path !=  'suscripciones' %}
+    <!-- Botón de suscripción centrado, visible solo si el usuario está autenticado -->
+    {% if user.is_authenticated %}
     <div class="text-center my-5" id="suscripcion-boton">
         <a href="{% url 'suscripciones' %}" class="btn btn-suscripcion">
             Ver opciones de suscripción
         </a>
     </div>
     {% endif %}
+    
+    <script src="https://www.paypal.com/sdk/js?client-id={{ PAYPAL_CLIENT_ID }}&components=buttons"></script> 
+    <script>
+        // Botón de PayPal para el Plan Semanal
+        paypal.Buttons({
+            createOrder: function(data, actions) {
+                return actions.order.create({
+                    purchase_units: [{
+                        amount: {
+                            value: '1.00'  // Precio del plan semanal
+                        }
+                    }]
+                });
+            },
+            onApprove: function(data, actions) {
+                return actions.order.capture().then(function(details) {
+                    alert('Pago realizado con éxito por ' + details.payer.name.given_name);
+                });
+            },
+            onError: function(err) {
+                console.log(err);
+            }
+        }).render('#paypal-button-container-1');
+
+        // Botón de PayPal para el Plan 3 Meses
+        paypal.Buttons({
+            createOrder: function(data, actions) {
+                return actions.order.create({
+                    purchase_units: [{
+                        amount: {
+                            value: '30.00'  // Precio total por 3 meses
+                        }
+                    }]
+                });
+            },
+            onApprove: function(data, actions) {
+                return actions.order.capture().then(function(details) {
+                    alert('Pago realizado con éxito por ' + details.payer.name.given_name);
+                });
+            },
+            onError: function(err) {
+                console.log(err);
+            }
+        }).render('#paypal-button-container-2');
+
+        // Botón de PayPal para el Plan Anual
+        paypal.Buttons({
+            createOrder: function(data, actions) {
+                return actions.order.create({
+                    purchase_units: [{
+                        amount: {
+                            value: '204.00'  // Precio total por 12 meses
+                        }
+                    }]
+                });
+            },
+            onApprove: function(data, actions) {
+                return actions.order.capture().then(function(details) {
+                    alert('Pago realizado con éxito por ' + details.payer.name.given_name);
+                });
+            },
+            onError: function(err) {
+                console.log(err);
+            }
+        }).render('#paypal-button-container-3');
+    </script>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
     <script>

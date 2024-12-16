@@ -1,14 +1,80 @@
 {% extends 'base.html' %}
 {% load crispy_forms_tags %}
 
-{% block titulo %} - Acceso{% endblock titulo %}
-
+{% block titulo %}Acceso{% endblock titulo %}
 
 {% block contenido %}
-    <h1>Acceso</h1>
-    <form action="" method="post">
-        {% csrf_token %}
-        {{ form|crispy }}
-        <button class="btn btn-success" type="submit">Entrar</button>
-    </form>
+<style>
+    /* Centrado del formulario en la pantalla */
+    .form-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 80vh; /* Centrar verticalmente */
+    }
+
+    /* Estilo del formulario */
+    .form-box {
+        max-width: 500px; /* Limita el ancho del formulario */
+        width: 100%;
+        background-color: #ffffff; /* Fondo blanco */
+        border-radius: 10px; /* Bordes redondeados */
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Sombra */
+        padding: 30px; /* Espaciado interno */
+    }
+
+    .form-box h1 {
+        /*font-family: 'Times New Roman', Times, serif; /* Fuente del título */
+        font-size: 2rem;
+        text-align: center;
+        margin-bottom: 20px;
+        color: #333333; /* Color del texto */
+    }
+
+    .form-box .btn-access {
+        width: 100%; /* Botón ancho completo */
+        margin-top: 20px;
+    }
+
+    /* Estilo para los enlaces secundarios */
+    .form-box .extra-links {
+        margin-top: 15px;
+        text-align: center;
+    }
+
+    .form-box .extra-links a {
+        color: #007bff; /* Azul de Bootstrap */
+        text-decoration: none;
+    }
+
+    .form-box .extra-links a:hover {
+        text-decoration: underline;
+    }
+
+    .btn-access {
+        background-color: #5d79be;
+        color: white;
+        border: none;
+    }
+
+    .btn-access:hover {
+        background-color: #5d77b8;
+        color: #ffffff;
+    }
+</style>
+
+<div class="form-container">
+    <div class="form-box">
+        <h1>Acceso</h1>
+        <form action="" method="post">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <button class="btn btn-access" type="submit">Entrar</button>
+        </form>
+        <div class="extra-links">
+            <p>¿No tienes cuenta? <a href="{% url 'account_signup' %}">Regístrate</a></p>
+            <p><a href="{% url 'account_reset_password' %}">¿Olvidaste tu contraseña?</a></p>
+        </div>
+    </div>
+</div>
 {% endblock contenido %}

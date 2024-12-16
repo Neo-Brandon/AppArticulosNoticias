@@ -1,0 +1,17 @@
+<!--plantillas/nuevo_articulo.html-->
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}  
+
+{% block titulo %}Registre una nueva categoria de noticia{% endblock titulo %}
+
+{% block contenido %}
+<div class="container">
+    <h2 class="mb-4">Crear nueva categoria</h2>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form|crispy }}  
+        <button type="submit" class="btn btn-success">Crear</button>
+    </form>
+</div>
+{% endblock contenido %}

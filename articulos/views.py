@@ -10,7 +10,7 @@ from .forms import FormularioComentario
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 # Vista para la página principal que muestra los artículos
-class VistaInicio(LoginRequiredMixin, ListView):
+class VistaInicio(ListView):
     model = Articulo
     template_name = 'inicio.html'  # Plantilla de la página principal
     context_object_name = 'articulos'
@@ -44,7 +44,7 @@ class VistaInicio(LoginRequiredMixin, ListView):
         return context
 
 # Vista para listar artículos con filtro y paginación
-class VistaListaArticulos(LoginRequiredMixin, ListView):
+class VistaListaArticulos(ListView):
     model = Articulo
     template_name = 'lista_articulos.html'
     context_object_name = 'articulos'
@@ -78,7 +78,7 @@ class VistaListaArticulos(LoginRequiredMixin, ListView):
         return context
 
 # Vista para detalle del artículo y agregar comentarios
-class VistaDetalleArticulo(LoginRequiredMixin, FormMixin, DetailView):
+class VistaDetalleArticulo(FormMixin, DetailView):
     model = Articulo
     template_name = 'detalle_articulo.html'
     context_object_name = 'articulo'
@@ -138,8 +138,9 @@ class VistaEliminacionArticulo(LoginRequiredMixin, UserPassesTestMixin, DeleteVi
         return obj.autor == self.request.user
 
 # NUEVA VISTA: Página de opciones de suscripción
-class VistaOpcionesSuscripcion(LoginRequiredMixin, TemplateView):
+class VistaOpcionesSuscripcion(TemplateView):
     template_name = 'suscripciones.html'
+<<<<<<< HEAD
      
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -147,3 +148,10 @@ class VistaOpcionesSuscripcion(LoginRequiredMixin, TemplateView):
         context['PAYPAL_CLIENT_ID'] = settings.PAYPAL_CLIENT_ID
         context['PAYPAL_MODE'] = settings.PAYPAL_MODE
         return context
+=======
+    
+class VistaRegistroCategoria(LoginRequiredMixin, CreateView):
+    model = Categoria
+    template_name = 'crear_categoria.html'
+    success_url = reverse_lazy('lista_articulos')
+>>>>>>> 5e4f8e0f1e82ded8596a8e8a5853c29485ab5362
