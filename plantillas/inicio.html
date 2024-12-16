@@ -1,16 +1,108 @@
 {% extends 'base.html' %}
 
-
 {% block titulo %} - Inicio{% endblock titulo %}
 
-
 {% block contenido %}
+<div class="container-xxl d-flex flex-column justify-content-center align-items-center">
 
-    <div class="container-xxl d-flex flex-column justify-content-center align-items-center">
-        
+    <!-- Filtros y búsqueda -->
+    <div class="row mb-4 w-100">
+        <div class="col-md-12">
+            <form method="get" class="row gx-2 align-items-end">
+                <!-- Dropdown de categorías -->
+                <div class="col-md-3">
+                    <label for="categoria" class="form-label">Categoría</label>
+                    <select name="categoria" id="categoria" class="form-select">
+                        <option value="">Todas las categorías</option>
+                        {% for categoria in categorias %}
+                        <option value="{{ categoria.id }}" {% if filtro_categoria|stringformat:"s" == categoria.id|stringformat:"s" %}selected{% endif %}>
+                            {{ categoria.nombre }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
 
-        
-                    
+                <!-- Campo de búsqueda -->
+                <div class="col-md-3">
+                    <label for="q" class="form-label">Buscar artículo</label>
+                    <input type="text" id="q" name="q" class="form-control" placeholder="Buscar artículos..." value="{{ termino_busqueda }}">
+                </div>
+
+                <!-- Fecha de inicio -->
+                <div class="col-md-2">
+                    <label for="fecha_inicio" class="form-label">Fecha inicio</label>
+                    <input type="date" id="fecha_inicio" name="fecha_inicio" class="form-control" value="{{ fecha_inicio }}">
+                </div>
+
+                <!-- Fecha de fin -->
+                <div class="col-md-2">
+                    <label for="fecha_fin" class="form-label">Fecha fin</label>
+                    <input type="date" id="fecha_fin" name="fecha_fin" class="form-control" value="{{ fecha_fin }}">
+                </div>
+
+                <!-- Botón de búsqueda -->
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-primary w-100">Filtrar</button>
+                </div>
+            </form>
+        </div>
     </div>
 
+    <!-- Listado de artículos -->
+    <div class="row w-100">
+        {% if articulos %}
+            {% for articulo in articulos %}
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ articulo.titulo }}</h5>
+                            <p class="card-text">{{ articulo.contenido|truncatechars:100 }}</p>
+                            <p class="card-text"><small class="text-muted">Categoría: {{ articulo.categoria.nombre }}</small></p>
+                            <p class="card-text"><small class="text-muted">Fecha: {{ articulo.fecha_publicacion }}</small></p>
+                        </div>
+                        <div class="card-footer text-end">
+                            <a href="{% url 'detalle_articulo' articulo.pk %}" class="btn btn-sm btn-secondary">Leer más</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p class="text-center">No hay artículos disponibles con los filtros seleccionados.</p>
+        {% endif %}
+    </div>
+
+    <!-- Paginación -->
+    <div class="row w-100 mt-4">
+        <div class="col d-flex justify-content-center">
+            {% if is_paginated %}
+                <nav aria-label="Paginación de artículos">
+                    <ul class="pagination">
+                        {% if page_obj.has_previous %}
+                            <li class="page-item">
+                                <a class="page-link" href="?{% if filtro_categoria %}categoria={{ filtro_categoria }}&{% endif %}{% if termino_busqueda %}q={{ termino_busqueda }}&{% endif %}{% if fecha_inicio %}&fecha_inicio={{ fecha_inicio }}{% endif %}{% if fecha_fin %}&fecha_fin={{ fecha_fin }}{% endif %}&page={{ page_obj.previous_page_number }}" aria-label="Anterior">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+                        {% endif %}
+                        {% for num in page_obj.paginator.page_range %}
+                            <li class="page-item {% if page_obj.number == num %}active{% endif %}">
+                                <a class="page-link" href="?{% if filtro_categoria %}categoria={{ filtro_categoria }}&{% endif %}{% if termino_busqueda %}q={{ termino_busqueda }}&{% endif %}{% if fecha_inicio %}&fecha_inicio={{ fecha_inicio }}{% endif %}{% if fecha_fin %}&fecha_fin={{ fecha_fin }}{% endif %}&page={{ num }}">
+                                    {{ num }}
+                                </a>
+                            </li>
+                        {% endfor %}
+                        {% if page_obj.has_next %}
+                            <li class="page-item">
+                                <a class="page-link" href="?{% if filtro_categoria %}categoria={{ filtro_categoria }}&{% endif %}{% if termino_busqueda %}q={{ termino_busqueda }}&{% endif %}{% if fecha_inicio %}&fecha_inicio={{ fecha_inicio }}{% endif %}{% if fecha_fin %}&fecha_fin={{ fecha_fin }}{% endif %}&page={{ page_obj.next_page_number }}" aria-label="Siguiente">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </nav>
+            {% endif %}
+        </div>
+    </div>
+
+</div>
 {% endblock contenido %}

@@ -4,34 +4,50 @@
 
 {% block contenido %}
 <div class="container mt-5">
-    <h2 class="mb-4">Lista de Artículos</h2>
+    <h2 class="mb-4 text-center">Lista de Artículos</h2>
     
     {% for articulo in articulos %}
-    <div class="card">
-        <div class="card-header"></div>
-        <span class="font-weight-bold">{{ articulo.titulo }}</span>&middot;
-        <span class="text-muted">por {{ articulo.autor }} | {{ articulo.fecha }}</span>
-    </div>
-    <div class="card-body">
-        <p>{{ articulo.contenido }}</p>
-        <a href="{% url 'edicion_articulo' articulo.pk %}">Editar</a> | 
-        <a href="{% url 'eliminacion_articulo' articulo.pk %}">Eliminar</a>
-    </div>
-    <div class="card-footer text-center text-muted">
-        {% for comentario in articulo.comentario_set.all %}
-        <p>
-            <span class="font-weight-bold">
-                {{ comentario.autor }} &middot;
-            </span>
-            {{ comentario }}
-        </p>
-        {% endfor %}
-    </div>
-    </div>
+    <!-- Tarjeta de cada artículo -->
+    <div class="card mb-4 shadow-sm">
+        <!-- Encabezado del artículo -->
+        <div class="card-header bg-primary text-white">
+            <h5 class="mb-0">{{ articulo.titulo }}</h5>
+            <small class="text-light">
+                por <strong>{{ articulo.autor }}</strong> | Publicado: {{ articulo.fecha }}
+            </small>
+        </div>
 
-    <br>
+        <!-- Contenido del artículo -->
+        <div class="card-body">
+            <p>{{ articulo.contenido }}</p>
+            <div class="d-flex justify-content-end">
+                <a href="{% url 'edicion_articulo' articulo.pk %}" class="btn btn-sm btn-outline-warning me-2">Editar</a>
+                <a href="{% url 'eliminacion_articulo' articulo.pk %}" class="btn btn-sm btn-outline-danger">Eliminar</a>
+            </div>
+        </div>
+
+        <!-- Sección de comentarios -->
+        <div class="card-footer bg-light">
+            <h6 class="text-muted">Comentarios:</h6>
+            {% if articulo.comentario_set.all %}
+                <ul class="list-group list-group-flush">
+                    {% for comentario in articulo.comentario_set.all %}
+                    <li class="list-group-item">
+                        <strong>{{ comentario.autor }}:</strong>
+                        <span class="text-muted">{{ comentario }}</span>
+                    </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p class="text-muted mb-0">No hay comentarios aún.</p>
+            {% endif %}
+        </div>
+    </div>
     {% empty %}
-    <p>No hay artículos disponibles.</p>
+    <!-- Mensaje cuando no hay artículos -->
+    <div class="alert alert-info text-center" role="alert">
+        No hay artículos disponibles.
+    </div>
     {% endfor %}
 </div>
 {% endblock contenido %}

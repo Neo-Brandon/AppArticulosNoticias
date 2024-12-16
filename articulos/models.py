@@ -1,6 +1,8 @@
 from django.db import models
 from django.conf import settings
 from django.urls import reverse
+from django.contrib.auth.models import User
+from django.utils import timezone
 
 # Create your models here.
 
@@ -14,17 +16,10 @@ class Categoria(models.Model):
 class Articulo(models.Model):
     titulo = models.CharField(max_length=255)
     contenido = models.TextField()
-    fecha = models.DateTimeField(auto_now_add=True)
-    autor = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE
-    )
-    categoria = models.ForeignKey(
-        'Categoria', 
-        on_delete=models.SET_NULL, 
-        null=True, 
-        blank=True
-    )
+    fecha_publicacion = models.DateTimeField(auto_now_add=True)  # Fecha de publicación
+    categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE)
+    autor = models.ForeignKey(User, on_delete=models.CASCADE)
+    
     
     def __str__(self): 
         return self.titulo
