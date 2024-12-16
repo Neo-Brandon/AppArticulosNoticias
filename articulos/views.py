@@ -9,7 +9,7 @@ from .models import Articulo, Categoria
 from .forms import FormularioComentario
 
 # Vista para la página principal que muestra los artículos
-class VistaInicio(LoginRequiredMixin, ListView):
+class VistaInicio(ListView):
     model = Articulo
     template_name = 'inicio.html'  # Plantilla de la página principal
     context_object_name = 'articulos'
@@ -43,7 +43,7 @@ class VistaInicio(LoginRequiredMixin, ListView):
         return context
 
 # Vista para listar artículos con filtro y paginación
-class VistaListaArticulos(LoginRequiredMixin, ListView):
+class VistaListaArticulos(ListView):
     model = Articulo
     template_name = 'lista_articulos.html'
     context_object_name = 'articulos'
@@ -77,7 +77,7 @@ class VistaListaArticulos(LoginRequiredMixin, ListView):
         return context
 
 # Vista para detalle del artículo y agregar comentarios
-class VistaDetalleArticulo(LoginRequiredMixin, FormMixin, DetailView):
+class VistaDetalleArticulo(FormMixin, DetailView):
     model = Articulo
     template_name = 'detalle_articulo.html'
     context_object_name = 'articulo'
@@ -135,3 +135,8 @@ class VistaEliminacionArticulo(LoginRequiredMixin, UserPassesTestMixin, DeleteVi
     def test_func(self):
         obj = self.get_object()
         return obj.autor == self.request.user
+    
+class VistaRegistroCategoria(LoginRequiredMixin, CreateView):
+    model = Categoria
+    template_name = 'crear_categoria.html'
+    success_url = reverse_lazy('lista_articulos')

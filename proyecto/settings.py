@@ -199,4 +199,5 @@ MEDIA_ROOT = BASE_DIR / "media" # new
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 
-CRISPY_TEMPLATE_PACK = 'bootstrap5'
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"  # Permitir Bootstrap 5
+CRISPY_TEMPLATE_PACK = "bootstrap5"          # Definir Bootstrap 5 como el paquete predeterminado
