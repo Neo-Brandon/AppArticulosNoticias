@@ -6,6 +6,7 @@ from .views import (
     VistaEdicionArticulo,
     VistaEliminacionArticulo,
     VistaCreacionArticulo,   
+    VistaOpcionesSuscripcion,
 )
 
 urlpatterns = [
@@ -15,4 +16,6 @@ urlpatterns = [
     path('<int:pk>/editar/', VistaEdicionArticulo.as_view(), name='edicion_articulo'),
     path('<int:pk>/eliminar/', VistaEliminacionArticulo.as_view(), name='eliminacion_articulo'),
     path('nuevo/', VistaCreacionArticulo.as_view(), name='nuevo_articulo'),
+    path('suscripciones/', VistaOpcionesSuscripcion.as_view(), name='suscripciones'),
+
 ]
