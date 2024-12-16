@@ -16,10 +16,18 @@ class Categoria(models.Model):
 class Articulo(models.Model):
     titulo = models.CharField(max_length=255)
     contenido = models.TextField()
-    fecha_publicacion = models.DateTimeField(auto_now_add=True)  # Fecha de publicación
-    categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE)
-    autor = models.ForeignKey(User, on_delete=models.CASCADE)
-    
+    fecha_publicacion = models.DateTimeField(auto_now_add=True)
+    imagen = models.ImageField(upload_to="covers/", blank=True)
+    autor = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE
+    )
+    categoria = models.ForeignKey(
+        'Categoria', 
+        on_delete=models.SET_NULL, 
+        null=True, 
+        blank=True
+    )
     
     def __str__(self): 
         return self.titulo

@@ -2,19 +2,18 @@
 
 from django.db import migrations
 
-
-# def seed_categorias(apps, schema_editor):
-  #  Categoria = apps.get_model('articulos', 'Categoria')
-   # categorias_iniciales = [
-    #    'Tecnología', 'Ciencia', 'Deportes', 'Arte', 'Música', 
-    #    'Política', 'Economía', 'Cultura', 'Sociales', 'Farándula', 'Policial'
-   # ]
-   # for nombre in categorias_iniciales:
-   #     try:
-   #         Categoria.objects.get_or_create(nombre=nombre)
-    #    except Exception as e:
-    #        print(f"Error al crear la categoría {nombre}: {e}")
-
+def seed_categorias(apps, schema_editor):
+    Categoria = apps.get_model('articulos', 'Categoria')
+    categorias_iniciales = [
+        'Tecnología', 'Ciencia', 'Deportes', 'Arte', 'Música', 
+        'Política', 'Economía', 'Cultura', 'Sociales', 'Farándula', 'Policial'
+    ]
+    for nombre in categorias_iniciales:
+        try:
+            Categoria.objects.get_or_create(nombre=nombre)
+        except Exception as e:
+            print(f"Error al crear la categoría {nombre}: {e}")
+#clases
 class Migration(migrations.Migration):
 
     dependencies = [
@@ -23,5 +22,5 @@ class Migration(migrations.Migration):
 
     operations = [
         # Seeder para insertar las categorías iniciales
-       # migrations.RunPython(seed_categorias),
+        migrations.RunPython(seed_categorias),
     ]

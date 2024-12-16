@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
-
+import os
 from pathlib import Path
 from environs import Env
 
@@ -189,3 +189,14 @@ ACCOUNT_UNIQUE_EMAIL = True
 PAYPAL_CLIENT_ID = env('PAYPAL_CLIENT_ID', default='AbtPgwSybv7Qk5j9qC2BSi_SHRRoPQXEpWoHrkUIf9rZfvBJSsuaof7341MPFUuCB7H4PCyaHLvVxmUh')  # Añade tu CLIENT_ID
 PAYPAL_CLIENT_SECRET = env('PAYPAL_CLIENT_SECRET', default='EJoTLyzs9XwdJdtND7FVoDjNczzKKy_8WaWbsUnGvLmgIgJjlWJmnbuv7GBxcaP6S28zgS-WyES9eGaK')  # Añade tu CLIENT_SECRET
 PAYPAL_MODE = env('PAYPAL_MODE', default='sandbox')  # Cambia a 'live' cuando estés listo para producción
+
+#django carpeta de archivos para usuarios--------------------
+# django_project/settings.py
+MEDIA_URL = "/media/" # new
+MEDIA_ROOT = BASE_DIR / "media" # new
+
+# Esta es otra ruta para archivos estaticos publicos
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
+
+CRISPY_TEMPLATE_PACK = 'bootstrap5'

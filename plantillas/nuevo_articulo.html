@@ -6,9 +6,9 @@
 {% block titulo %}Crear Nuevo Artículo{% endblock titulo %}
 
 {% block contenido %}
-<div class="container mt-5">
+<div class="container">
     <h2 class="mb-4">Publicar Nuevo Artículo</h2>
-    <form method="POST">
+    <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form|crispy }}  
         <button type="submit" class="btn btn-success">Publicar</button>

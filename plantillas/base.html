@@ -108,18 +108,32 @@
             height: auto;
             cursor: pointer;
         }
+
+        .article-title {
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 0px;
+            padding-top: 20px;
+            padding-bottom: 10px;
+        }
     </style>
+    {% load static %}
+    <!-- Custom CSS -->
+    <link href="{% static 'css/custom.css' %}" rel="stylesheet">
 </head>
 <body>
+    
     <header class="container-fluid d-flex justify-content-between align-items-center p-3 bg-white shadow-sm">
         <!-- Sección izquierda (Logo que redirige a la página principal) -->
         <a href="/" id="logo">
-            <img src="plantillas/imagenes/descarga.png" alt="Logo">
+            <img style="width: 150px;"
+             src="{% static 'images/descarga.png' %}" alt="Logo" class="imagen">
         </a>
 
         <!-- Botón Nueva -->
         <a href="{% url 'nuevo_articulo' %}" class="btn publica-btn me-3"> Publicar un articulo/noticia</a>
-    
+        
         <!-- Sección derecha (Botones y dropdown) -->
         <div>
             {% if user.is_authenticated %}
@@ -147,9 +161,10 @@
 
     <main>
         <div class="container-xxl d-flex flex-column justify-content-center align-items-center">
-            <h1 class="" style="padding-top: 25px;">InformaTech</h1>
+            <h1 class="article-title">InformaTech</h1>
+            <p>Tu diario de actualidad</p>
         </div>
-
+        <hr>
         {% block contenido %}
         {% endblock contenido %}
     </main>

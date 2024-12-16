@@ -104,7 +104,7 @@ class VistaDetalleArticulo(LoginRequiredMixin, FormMixin, DetailView):
 class VistaCreacionArticulo(LoginRequiredMixin, CreateView):
     model = Articulo
     template_name = 'nuevo_articulo.html'
-    fields = ('titulo', 'contenido', 'categoria')
+    fields = ('titulo', 'contenido', 'categoria', 'imagen')
     success_url = reverse_lazy('inicio')  # Redirige a la página principal
 
     def form_valid(self, form):
@@ -112,14 +112,19 @@ class VistaCreacionArticulo(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
 # Vista para editar un artículo
-class VistaEdicionArticulo(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+class VistaEdicionArticulo(LoginRequiredMixin,  UpdateView):
     model = Articulo
-    fields = ('titulo', 'contenido', 'categoria')
+    fields = ('titulo', 'contenido', 'categoria', 'imagen')
     template_name = 'edicion_articulo.html'
 
     def test_func(self):
         obj = self.get_object()
         return obj.autor == self.request.user
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['form'] = self.get_form()  # Pasa el formulario al contexto
+        return context
 
 # Vista para eliminar un artículo
 class VistaEliminacionArticulo(LoginRequiredMixin, UserPassesTestMixin, DeleteView):

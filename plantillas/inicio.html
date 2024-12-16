@@ -3,6 +3,31 @@
 {% block titulo %} - Inicio{% endblock titulo %}
 
 {% block contenido %}
+<style>
+    .container-imagen {
+        padding-top: 30px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: auto;
+        margin-bottom: 20px;
+    }
+
+    .imagen {
+        width: auto;
+        height: 275px;
+        border-radius: 15px;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);  /* Sombra sutil alrededor de la imagen */
+        border: 5px solid #f0f0f0;
+        padding: 5px;
+        transition: all 0.3s ease-in-out;
+    }
+
+    .imagen:hover {
+        box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.3);
+        transform: scale(1.05);
+    }
+</style>
 <div class="container-xxl d-flex flex-column justify-content-center align-items-center">
 
     <!-- Filtros y búsqueda -->
@@ -56,6 +81,9 @@
                     <div class="card h-100">
                         <div class="card-body">
                             <h5 class="card-title">{{ articulo.titulo }}</h5>
+                            <div class="container-imagen">
+                                <img class="imagen" src="{{articulo.imagen.url}}" alt="{{articulo.title}}">
+                            </div>
                             <p class="card-text">{{ articulo.contenido|truncatechars:100 }}</p>
                             <p class="card-text"><small class="text-muted">Categoría: {{ articulo.categoria.nombre }}</small></p>
                             <p class="card-text"><small class="text-muted">Fecha: {{ articulo.fecha_publicacion }}</small></p>

@@ -1,37 +1,135 @@
 {% extends 'base.html' %}
 {% load crispy_forms_tags %}
 
+{% block titulo %}{{ articulo.titulo }}{% endblock titulo %}
+
 {% block contenido %}
+<style>
+    .container-imagen {
+        padding-top: 30px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: auto;
+        margin-bottom: 20px;
+    }
 
-<div class="article-entry">
-    <h2>{{ object.titulo }}</h2>
-    <p>por {{ object.autor }} | {{ object.fecha }} </p>
-    <p>{{ object.contenido }}</p>
+    .imagen {
+        width: auto;
+        height: 325px;
+        border-radius: 15px;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);  /* Sombra sutil alrededor de la imagen */
+        border: 5px solid #f0f0f0;
+        padding: 5px;
+        transition: all 0.3s ease-in-out;
+    }
+
+    .imagen:hover {
+        box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.3);
+        transform: scale(1.05);
+    }
+
+    .article-entry {
+        margin-top: 20px;
+        padding: 20px;
+        background-color: #f8f9fa;
+        border-radius: 10px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .author-info {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .author-info h4 {
+        margin: 0;
+    }
+
+    .btn-action {
+        display: flex;
+        gap: 10px;
+    }
+
+    .comentarios-section {
+        background-color: #f1f1f1;
+        padding: 15px;
+        margin-top: 20px;
+        border-radius: 8px;
+    }
+
+    .comentarios-section hr {
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+
+    .comment-form {
+        background-color: #f8f9fa;
+        padding: 15px;
+        border-radius: 8px;
+        margin-top: 20px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .btn-submit-comment {
+        width: 100%;
+    }
+
+    .article-title {
+        font-family: 'Times New Roman', Times, serif;
+        font-size: 2.5rem;
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+</style>
+
+<div class="container">
+    <h2 class=" mb-4">{{ articulo.titulo }}</h2>
+    
+    <!-- Imagen -->
+    <div class="container-imagen">
+        <img class="imagen" src="{{ articulo.imagen.url }}" alt="{{ articulo.title }}">
+    </div>
+
+    <!-- Información del artículo -->
+    <div class="article-entry">
+        <div class="author-info">
+            <h4>Por: <strong>{{ articulo.autor }}</strong> | {{ articulo.fecha }}</h4>
+            
+            <div class="btn-action">
+                <a class="btn btn-success" href="{% url 'edicion_articulo' object.pk %}">Editar</a>
+                <a class="btn btn-danger" href="{% url 'eliminacion_articulo' object.pk %}">Eliminar</a>
+            </div>
+        </div>
+
+        <p>{{ articulo.contenido }}</p>
+    </div>
+
+    <!-- Comentarios -->
+    <div class="comentarios-section">
+        <h4>Comentarios</h4>
+        {% for comentario in object.comentario_set.all %}
+            <p><strong>{{ comentario.usuario }}</strong> &middot; {{ comentario.contenido }}</p>
+        {% empty %}
+            <p>No hay comentarios aún. ¡Sé el primero en comentar!</p>
+        {% endfor %}
+    </div>
+
+    <hr>
+
+    <!-- Agregar comentario -->
+    <div class="comment-form">
+        <h4>Agregar comentario</h4>
+        <form action="" method="post">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <button class="btn btn-success btn-submit-comment" type="submit">Guardar comentario</button>
+        </form>
+    </div>
+
+    <p class="mt-4">Volver a <a href="{% url 'lista_articulos' %}">Todos los artículos</a></p>
 </div>
-
-<hr>
-
-<h4>Comentarios</h4>
-{% for comentario in object.comentario_set.all %}
-    <p><strong>{{ comentario.usuario }}</strong> &middot; {{ comentario.contenido }}</p>
-{% empty %}
-    <p>No hay comentarios aún. ¡Sé el primero en comentar!</p>
-{% endfor %}
-
-<hr>
-
-<h4>Agregar comentario</h4>
-<form action="" method="post">
-    {% csrf_token %}
-    {{ form|crispy }}
-    <button class="btn btn-success ml-2" type="submit">Guardar comentario</button>
-</form>
-
-<p>
-    <a href="{% url 'edicion_articulo' object.pk %}">Editar</a> | 
-    <a href="{% url 'eliminacion_articulo' object.pk %}">Eliminar</a>
-</p>
-
-<p>Volver a <a href="{% url 'lista_articulos' %}">Todos los artículos</a></p>
 
 {% endblock contenido %}

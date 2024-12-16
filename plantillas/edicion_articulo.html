@@ -4,10 +4,55 @@
 {% load crispy_forms_tags %}
 
 {% block contenido %}
-   <h1>Edicion</h1>
-   <form action="" method="post">{% csrf_token %}
-    {{ form|crispy }}
-    <button class="btn btn-info ml-2" type="submit">Editar</button>
-   </form>
+<style>
+   .container-imagen {
+       padding-top: 30px;
+       display: flex;
+       justify-content: center;
+       align-items: center;
+       height: auto;
+       margin-bottom: 20px;
+   }
 
-   {% endblock contenido %}
+   .imagen {
+       width: auto;
+       height: 185px;
+   }
+
+   /* Estilo para el formulario */
+   .form-container {
+       max-width: 800px;
+       margin: 0 auto;
+       padding: 30px;
+       border: 1px solid #ddd;
+       border-radius: 10px;
+       background-color: #f8f9fa; /* Fondo claro */
+   }
+
+   .btn-info {
+       margin-top: 20px; /* Espaciado superior para el botón */
+       width: 100%; /* Hace que el botón ocupe todo el ancho */
+   }
+</style>
+
+<div class="container">
+    <h1 class="text-center my-4">Editar Artículo</h1>
+
+    <div class="container-imagen">
+        <img class="imagen" src="{{articulo.imagen.url}}" alt="{{articulo.title}}">
+    </div>
+
+    <div class="form-container">
+        <form action="" method="post">
+            {% csrf_token %}
+            
+            <!-- Aplicando crispy_forms para mejorar el estilo de los campos -->
+            {{ form|crispy }}
+
+            <!-- Botón para enviar el formulario -->
+            <button class="btn btn-info" type="submit">Guardar Cambios</button>
+        </form>
+    </div>
+</div>
+
+{% endblock contenido %}
