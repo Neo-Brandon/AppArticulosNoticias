@@ -1,4 +1,4 @@
-from django.views.generic import ListView, DetailView, UpdateView, DeleteView, CreateView
+from django.views.generic import ListView, DetailView, UpdateView, DeleteView, CreateView, TemplateView
 from django.views.generic.edit import FormMixin
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse_lazy, reverse
@@ -47,7 +47,7 @@ class VistaListaArticulos(LoginRequiredMixin, ListView):
     model = Articulo
     template_name = 'lista_articulos.html'
     context_object_name = 'articulos'
-    paginate_by = 10  # Paginación: 10 artículos por página
+    paginate_by = 10
 
     def get_queryset(self):
         queryset = Articulo.objects.all()
@@ -112,7 +112,7 @@ class VistaCreacionArticulo(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
 # Vista para editar un artículo
-class VistaEdicionArticulo(LoginRequiredMixin,  UpdateView):
+class VistaEdicionArticulo(LoginRequiredMixin, UpdateView):
     model = Articulo
     fields = ('titulo', 'contenido', 'categoria', 'imagen')
     template_name = 'edicion_articulo.html'
@@ -135,3 +135,7 @@ class VistaEliminacionArticulo(LoginRequiredMixin, UserPassesTestMixin, DeleteVi
     def test_func(self):
         obj = self.get_object()
         return obj.autor == self.request.user
+
+# NUEVA VISTA: Página de opciones de suscripción
+class VistaOpcionesSuscripcion(LoginRequiredMixin, TemplateView):
+    template_name = 'suscripciones.html'
