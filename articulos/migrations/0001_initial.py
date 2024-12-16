@@ -20,7 +20,7 @@ class Migration(migrations.Migration):
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('titulo', models.CharField(max_length=255)),
                 ('contenido', models.TextField()),
-                ('fecha_publicacion', models.DateTimeField(auto_now_add=True)),
+                ('fecha_publicacion', models.DateTimeField(auto_now_add=True)), #Cambió de nombre
                 ('autor', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
             ],
         ),

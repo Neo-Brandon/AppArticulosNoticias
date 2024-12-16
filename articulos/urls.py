@@ -17,5 +17,4 @@ urlpatterns = [
     path('<int:pk>/eliminar/', VistaEliminacionArticulo.as_view(), name='eliminacion_articulo'),
     path('nuevo/', VistaCreacionArticulo.as_view(), name='nuevo_articulo'),
     path('suscripciones/', VistaOpcionesSuscripcion.as_view(), name='suscripciones'),
-
 ]
