@@ -140,18 +140,18 @@ class VistaEliminacionArticulo(LoginRequiredMixin, UserPassesTestMixin, DeleteVi
 # NUEVA VISTA: Página de opciones de suscripción
 class VistaOpcionesSuscripcion(TemplateView):
     template_name = 'suscripciones.html'
-<<<<<<< HEAD
-     
+
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         # Agregar las variables de PayPal al contexto para usarlas en la plantilla
         context['PAYPAL_CLIENT_ID'] = settings.PAYPAL_CLIENT_ID
         context['PAYPAL_MODE'] = settings.PAYPAL_MODE
         return context
-=======
     
+
 class VistaRegistroCategoria(LoginRequiredMixin, CreateView):
     model = Categoria
     template_name = 'crear_categoria.html'
     success_url = reverse_lazy('lista_articulos')
->>>>>>> 5e4f8e0f1e82ded8596a8e8a5853c29485ab5362
+

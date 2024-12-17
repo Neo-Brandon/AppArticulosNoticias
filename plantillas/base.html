@@ -100,6 +100,7 @@
                 Suscribirse
             </a>
         </div>
+        {% endif %}
         <!-- Sección derecha (Botones y dropdown) -->
         <div>
             {% if user.is_authenticated %}
@@ -134,15 +135,6 @@
         {% block contenido %}
         {% endblock contenido %}
     </main>
-
-    <!-- Botón de suscripción centrado, visible solo si el usuario está autenticado -->
-    {% if user.is_authenticated %}
-    <div class="text-center my-5" id="suscripcion-boton">
-        <a href="{% url 'suscripciones' %}" class="btn btn-suscripcion">
-            Ver opciones de suscripción
-        </a>
-    </div>
-    {% endif %}
     
     <script src="https://www.paypal.com/sdk/js?client-id={{ PAYPAL_CLIENT_ID }}&components=buttons"></script> 
     <script>
@@ -212,13 +204,5 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            console.log(window.location.pathname);  // Esto mostrará la ruta actual
-            if (window.location.pathname === '/suscripciones/') {
-                document.getElementById('suscripcion-boton').style.display = 'none';
-            }
-        });
-    </script>
 </body>
 </html>
