@@ -157,7 +157,18 @@ AUTHENTICATION_BACKENDS = (
 )
 
 # Backend para el envío de correos
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+# Configuraciones para correo automaticos
+
+# Correo por defecto del sistema
+DEFAULT_FROM_EMAIL = "admin@InformaTech.com"  # new
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = ''  # Tu dirección de correo de Gmail
+EMAIL_HOST_PASSWORD = ''  # Contraseña de aplicación de Gmail
+
 
 # Redirección después de iniciar sesión
 LOGIN_REDIRECT_URL = 'inicio'
@@ -183,6 +194,8 @@ ACCOUNT_EMAIL_REQUIRED = True
 # Asegurarse de que los correos electrónicos sean únicos
 ACCOUNT_UNIQUE_EMAIL = True
 
+# Correo por defecto del sistema
+DEFAULT_FROM_EMAIL = "admin@InformaTech.com"  # new
 
 
 # Configuración de PayPal

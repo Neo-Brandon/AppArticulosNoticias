@@ -1,16 +1,73 @@
 {% extends 'base.html' %}
 {% load crispy_forms_tags %}
 
-
-{% block titulo %} - Salida{% endblock titulo %}
-
+{% block titulo %}Cerrar Sesión{% endblock titulo %}
 
 {% block contenido %}
-    <h1>Salida</h1>
-    <p>¿Esta usted seguro de que desea cerrar la sesion?</p>
-    <form action="{% url 'account_logout' %}" method="post">
-        {% csrf_token %}
-        {{ form|crispy }}
-        <button class="btn btn-danger" type="submit">Salir</button>
-    </form>
+<style>
+    /* Contenedor principal para centrar */
+    .logout-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 80vh; /* Centrar verticalmente */
+        padding: 20px;
+    }
+
+    /* Caja del contenido */
+    .logout-box {
+        max-width: 400px; /* Limitar el ancho */
+        width: 100%;
+        background-color: #ffffff;
+        border-radius: 10px; /* Bordes redondeados */
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+        padding: 30px;
+        text-align: center;
+    }
+
+    .logout-box h1 {
+        font-family: 'Times New Roman', Times, serif;
+        font-size: 2rem;
+        margin-bottom: 15px;
+        color: #333333;
+    }
+
+    .logout-box p {
+        font-size: 1rem;
+        color: #666666;
+        margin-bottom: 20px;
+    }
+
+    /* Botón de salida */
+    .logout-box .btn-danger {
+        width: 100%; /* Botón ancho completo */
+        padding: 10px;
+        font-size: 1.1rem;
+    }
+
+    /* Enlace de cancelar */
+    .logout-box .cancel-link {
+        display: block;
+        margin-top: 15px;
+        font-size: 0.9rem;
+        color: #007bff; /* Azul estándar de Bootstrap */
+        text-decoration: none;
+    }
+
+    .logout-box .cancel-link:hover {
+        text-decoration: underline;
+    }
+</style>
+
+<div class="logout-container">
+    <div class="logout-box">
+        <h1>¿Cerrar Sesión?</h1>
+        <p>¿Está usted seguro de que desea cerrar la sesión?</p>
+        <form action="{% url 'account_logout' %}" method="post">
+            {% csrf_token %}
+            <button class="btn btn-danger" type="submit">Salir</button>
+        </form>
+        <a href="{% url 'inicio' %}" class="cancel-link">Cancelar y regresar al inicio</a>
+    </div>
+</div>
 {% endblock contenido %}

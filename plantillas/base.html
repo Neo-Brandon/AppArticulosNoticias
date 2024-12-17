@@ -53,22 +53,34 @@
             height: auto;
             cursor: pointer;
         }
-
-        /* Botón de suscripción */
-        .btn-suscripcion {
-            background-color: #c5c212;
-            color: white;
-            
-            font-size: 16px;
-            border: none;
-            border-radius: 5px;
-            text-decoration: none;
+        /* Botones de publicar y suscribirse en línea */
+        .gap-3 {
+            gap: 1rem; /* Separación entre botones */
         }
 
-        .btn-suscripcion:hover {
-            background-color: #5d77b8;
-            color: white;
-        }
+    /* Botón de suscripción */
+    .btn-suscripcion {
+        background-color: #c5c212; /* Color original */
+        color: white;
+        font-size: 16px;
+        border: none;
+        border-radius: 5px; /* Botón cuadrado */
+        padding: 8px 16px;
+        text-decoration: none;
+        margin-right: 15px; /* Separación del dropdown o botones de acceso */
+    }
+
+    .btn-suscripcion:hover {
+        background-color: #5d77b8; /* Color hover */
+        color: white;
+    }
+
+
+    /* Dropdown usuario alineado */
+    .dropdown {
+        margin-left: 20px; /* Espaciado con respecto a los botones */
+    }
+
 
         .article-title {
             font-family: 'Times New Roman', Times, serif;
@@ -90,20 +102,22 @@
         <a href="/" id="logo">
             <img src="{% static 'images/descarga.png' %}" alt="Logo" class="imagen">
         </a>
-
-        <!-- Botón Nueva -->
-        <a href="{% url 'nuevo_articulo' %}" class="btn publica-btn me-3"> Publicar un articulo/noticia</a>
-        <!-- Botón de suscripción centrado -->
-        {% if request.path !=  'suscripciones' %}
-        <div class="text-center" id="suscripcion-boton">
+    
+        <!-- Botones Nueva y Suscribirse -->
+        <div class="d-flex align-items-center gap-3">
+            <!-- Botón Nueva -->
+            <a href="{% url 'nuevo_articulo' %}" class="btn publica-btn me-3">Publicar un artículo/noticia</a>
+    
+            
+        </div>
+            <!-- Botón Suscribirse -->
             <a href="{% url 'suscripciones' %}" class="btn btn-suscripcion">
                 Suscribirse
             </a>
-        </div>
-        <!-- Sección derecha (Botones y dropdown) -->
+        <!-- Sección derecha (Dropdown y botones de acceso) -->
         <div>
             {% if user.is_authenticated %}
-            <div class="d-flex align-items-center">
+            <div class="d-flex align-items-center gap-3">
                 <!-- Dropdown Usuario -->
                 <div class="dropdown text-end">
                     <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" 
@@ -117,6 +131,7 @@
             </div>
             {% else %}
             <div class="text-end">
+            
                 <!-- Botones de acceso -->
                 <a href="{% url 'account_login' %}" class="btn btn-outline-custom me-2">Acceder</a>
                 <a href="{% url 'account_signup' %}" class="btn acceso-btn">Registro</a>
@@ -124,6 +139,7 @@
             {% endif %}
         </div>
     </header>
+    
 
     <main>
         <div class="container-xxl d-flex flex-column justify-content-center align-items-center">
