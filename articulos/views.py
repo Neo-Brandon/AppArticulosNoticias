@@ -150,6 +150,7 @@ class VistaOpcionesSuscripcion(TemplateView):
         return context
     
 
+    
 class VistaRegistroCategoria(LoginRequiredMixin, CreateView):
     model = Categoria
     template_name = 'crear_categoria.html'
