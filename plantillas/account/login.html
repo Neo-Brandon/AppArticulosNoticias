@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load crispy_forms_tags %}
+{% load socialaccount %}
 
 {% block titulo %}Acceso{% endblock titulo %}
 
@@ -24,7 +25,6 @@
     }
 
     .form-box h1 {
-        /*font-family: 'Times New Roman', Times, serif; /* Fuente del título */
         font-size: 2rem;
         text-align: center;
         margin-bottom: 20px;
@@ -61,6 +61,20 @@
         background-color: #5d77b8;
         color: #ffffff;
     }
+
+    /* Botón de Google */
+    .btn-google {
+        background-color: #db4437; /* Color oficial de Google */
+        color: white;
+        border: none;
+        width: 100%; /* Ancho completo */
+        margin-top: 10px;
+    }
+
+    .btn-google:hover {
+        background-color: #c33c2f; /* Más oscuro al pasar el cursor */
+        color: white;
+    }
 </style>
 
 <div class="form-container">
@@ -71,6 +85,12 @@
             {{ form|crispy }}
             <button class="btn btn-access" type="submit">Entrar</button>
         </form>
+
+        <!-- Botón de inicio de sesión con Google -->
+        <a href="{% provider_login_url 'google' %}" class="btn btn-google">
+            <i class="fa fa-google"></i> Iniciar sesión con Google
+        </a>
+
         <div class="extra-links">
             <p>¿No tienes cuenta? <a href="{% url 'account_signup' %}">Regístrate</a></p>
             <p><a href="{% url 'account_reset_password' %}">¿Olvidaste tu contraseña?</a></p>

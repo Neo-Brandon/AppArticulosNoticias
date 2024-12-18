@@ -12,6 +12,9 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 import os
 from pathlib import Path
 from environs import Env
+from dotenv import load_dotenv
+
+load_dotenv()
 
 env = Env()
 env.read_env()
@@ -35,6 +38,7 @@ ALLOWED_HOSTS = ['*']
 
 # Application definition
 
+# Configuración de las aplicaciones instaladas
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -42,15 +46,17 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django.contrib.sites',
+    'django.contrib.sites',  # Necesario para django-allauth
     
-    #De Terceros
+    # Aplicaciones de terceros
     'crispy_forms',
     'crispy_bootstrap5',
     'allauth',
     'allauth.account',
-    
-    # Locales
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',  # Proveedor de Google para allauth
+
+    # Aplicaciones locales
     'cuentas.apps.CuentasConfig',
     'paginas.apps.PaginasConfig',
     'articulos.apps.ArticulosConfig',
@@ -65,6 +71,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
 ]
 
 ROOT_URLCONF = 'proyecto.urls'
@@ -156,6 +163,13 @@ AUTHENTICATION_BACKENDS = (
     'allauth.account.auth_backends.AuthenticationBackend',  # Backend de allauth
 )
 
+SOCIALACCOUNT_PROVIDERS = {
+  'google': {
+     'SCOPE': ['profile', 'email'],
+     'AUTH_PARAMS': {'access_type': 'online'},
+     'OAUTH_PKCE_ENABLED': True,
+ }
+}
 # Backend para el envío de correos
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
@@ -214,3 +228,8 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"  # Permitir Bootstrap 5
 CRISPY_TEMPLATE_PACK = "bootstrap5"          # Definir Bootstrap 5 como el paquete predeterminado
+
+
+#CLAVES DE GOOGLE
+SOCIAL_AUTH_GOOGLE_CLIENT_ID = os.getenv("SOCIAL_AUTH_GOOGLE_CLIENT_ID")
+SOCIAL_AUTH_GOOGLE_SECRET = os.getenv("SOCIAL_AUTH_GOOGLE_SECRET")
