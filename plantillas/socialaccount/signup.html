@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block head_title %}{% trans "Signup" %}{% endblock %}
+
+{% block contenido %}
+<style>
+    /* Contenedor principal */
+    .signup-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 80vh; /* Centra verticalmente */
+        background-color: #235383; /* Fondo gris claro */
+        padding: 20px;
+    }
+
+    /* Caja del formulario */
+    .signup-box {
+        background-color: white;
+        border-radius: 10px; /* Bordes redondeados */
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+        padding: 30px;
+        max-width: 500px;
+        width: 100%; /* Responsivo */
+        text-align: center; /* Centra el contenido */
+    }
+
+    /* Título */
+    .signup-box h1 {
+        font-size: 2rem;
+        font-family: 'Times New Roman', serif;
+        margin-bottom: 20px;
+        color: #5d77b8; /* Azul personalizable */
+    }
+
+    /* Párrafos descriptivos */
+    .signup-box p {
+        font-size: 1rem;
+        color: #555;
+        margin-bottom: 20px;
+    }
+
+    /* Botón de registro */
+    .signup-box button {
+        width: 100%;
+        font-size: 1.1rem;
+        padding: 10px;
+        font-weight: bold;
+        color: white;
+        background-color: #5d77b8; /* Azul personalizado */
+        border: none;
+        border-radius: 5px; /* Bordes suaves */
+    }
+
+    .signup-box button:hover {
+        background-color: #7495e9; /* Hover */
+    }
+
+    /* Campos del formulario */
+    .signup-box input[type="text"],
+    .signup-box input[type="email"],
+    .signup-box input[type="password"] {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 15px;
+        border: 1px solid #ced4da;
+        border-radius: 5px;
+    }
+
+    .signup-box input[type="text"]:focus,
+    .signup-box input[type="email"]:focus,
+    .signup-box input[type="password"]:focus {
+        border-color: #5d77b8;
+        box-shadow: 0 0 5px rgba(93, 119, 184, 0.5);
+    }
+</style>
+
+<div class="signup-container">
+    <div class="signup-box">
+        <h1>{% trans "Sign Up" %}</h1>
+        <p>{% blocktrans with provider_name=account.get_provider.name site_name=site.name %}
+            Estas a punto de usar tu cuenta de {{provider_name}} para acceder a {{site_name}}. As a final step, please complete the following form:
+        {% endblocktrans %}</p>
+        <form class="signup" id="signup_form" method="post" action="{% url 'socialaccount_signup' %}">
+            {% csrf_token %}
+            {{ form.as_p }}
+            {% if redirect_field_value %}
+            <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+            {% endif %}
+            <button type="submit">{% trans "Sign Up" %} &raquo;</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
