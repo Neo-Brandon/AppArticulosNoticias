@@ -5,7 +5,7 @@
     <!-- Tarjeta 1: Plan Semanal -->
     <div style="border: 1px solid #ddd; border-radius: 10px; width: 300px; text-align: center; padding: 20px;">
         <h3>PLAN SEMANAL</h3>
-        <p><strong>1$</strong> el primer mes</p>
+        <p><strong>1 $/semana</strong></p>
         <p>Disfruta de contenido semanal, y podrás subir hasta 5 artículos.</p>
         <div id="paypal-button-container-1"></div>
         <script>
@@ -14,7 +14,7 @@
                     return actions.order.create({
                         purchase_units: [{
                             amount: {
-                                value: '1.00'  // Precio del plan semanal
+                                value: '5.00'  // Precio del plan semanal
                             }
                         }]
                     });

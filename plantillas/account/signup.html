@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% load crispy_forms_tags %}
-
+{% load socialaccount %}
 
 {% block titulo %} - Registro{% endblock titulo %}
 
@@ -25,7 +25,6 @@
     }
 
     .form-box h1 {
-        /*font-family: 'Times New Roman', Times, serif; /* Fuente del título */
         font-size: 2rem;
         text-align: center;
         margin-bottom: 20px;
@@ -62,6 +61,23 @@
         background-color: #5d77b8;
         color: #ffffff;
     }
+
+    /* Estilo del botón de Google similar al de registrar */
+    .btn-google {
+        width: 100%;
+        background-color: #db4437; 
+        color: white;
+        border: none;
+        padding: 10px;
+        margin-top: 15px;
+        font-size: 1rem; /* Tamaño de fuente similar al de registrar */
+        border-radius: 5px; /* Bordes redondeados */
+        text-align: center;
+    }
+
+    .btn-google:hover {
+        background-color: #c33c2f; /* Tono más oscuro al pasar el ratón */
+    }
 </style>
 
 <div class="form-container">
@@ -75,15 +91,12 @@
         <div class="extra-links">
             <p>¿Ya tienes una cuenta? <a href="{% url 'account_login' %}">Iniciar sesión</a></p>
         </div>
+        <!-- Botón de Google con el mismo estilo que el botón de registrar -->
+        <div class="mt-3">
+            <a href="{% provider_login_url 'google' %}" class="btn btn-google">
+                Iniciar sesión con Google
+            </a>
+        </div>
     </div>
 </div>
-<!--
-    <h2>Registro</h2>
-    <form action="" method="post">
-        {% csrf_token %}
-        
-        {{ form|crispy }}
-        <button class="btn btn-success" type="submit">Registrar</button>
-    </form>
 {% endblock contenido %}
--->

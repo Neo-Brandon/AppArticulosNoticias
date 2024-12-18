@@ -16,9 +16,9 @@
 
     .imagen {
         width: auto;
-        height: 200px;
+        height: 300px;  /* Aumenté la altura para mejor visualización */
         border-radius: 15px;
-        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);  /* Sombra sutil alrededor de la imagen */
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
         border: 5px solid #f0f0f0;
         padding: 5px;
         transition: all 0.3s ease-in-out;
@@ -86,21 +86,23 @@
 </style>
 
 <div class="container">
-    <h2 class=" mb-4">{{ articulo.titulo }}</h2>
+    <h2 class="mb-4">{{ articulo.titulo }}</h2>
     
     <!-- Imagen -->
     <div class="container-imagen">
-        <img class="imagen" src="{{ articulo.imagen.url }}" alt="{{ articulo.title }}">
+        <img class="imagen" src="{{ articulo.imagen.url }}" alt="{{ articulo.titulo }}">
     </div>
 
     <!-- Información del artículo -->
     <div class="article-entry">
         <div class="author-info">
-            <h4>Por: <strong>{{ articulo.autor }}</strong> | {{ articulo.fecha }}</h4>
+            <h4>Por: <strong>{{ articulo.autor }}</strong> | {{ articulo.fecha_publicacion|date:"d M Y" }}</h4>
             
             <div class="btn-action">
-                <a class="btn btn-success" href="{% url 'edicion_articulo' object.pk %}">Editar</a>
-                <a class="btn btn-danger" href="{% url 'eliminacion_articulo' object.pk %}">Eliminar</a>
+                {% if user == articulo.autor %}
+                    <a class="btn btn-success" href="{% url 'edicion_articulo' articulo.pk %}">Editar</a>
+                    <a class="btn btn-danger" href="{% url 'eliminacion_articulo' articulo.pk %}">Eliminar</a>
+                {% endif %}
             </div>
         </div>
 
@@ -110,8 +112,8 @@
     <!-- Comentarios -->
     <div class="comentarios-section">
         <h4>Comentarios</h4>
-        {% for comentario in object.comentario_set.all %}
-            <p><strong>{{ comentario.usuario }}</strong> &middot; {{ comentario.contenido }}</p>
+        {% for comentario in articulo.comentario_set.all %}
+            <p><strong>{{ comentario.autor.username }}</strong> &middot; {{ comentario.comentario }}</p>
         {% empty %}
             <p>No hay comentarios aún. ¡Sé el primero en comentar!</p>
         {% endfor %}
@@ -120,14 +122,18 @@
     <hr>
 
     <!-- Agregar comentario -->
-    <div class="comment-form">
-        <h4>Agregar comentario</h4>
-        <form action="" method="post">
-            {% csrf_token %}
-            {{ form|crispy }}
-            <button class="btn btn-success btn-submit-comment" type="submit">Guardar comentario</button>
-        </form>
-    </div>
+    {% if user.is_authenticated %}
+        <div class="comment-form">
+            <h4>Agregar comentario</h4>
+            <form method="post">
+                {% csrf_token %}
+                {{ form|crispy }}
+                <button class="btn btn-success btn-submit-comment" type="submit">Guardar comentario</button>
+            </form>
+        </div>
+    {% else %}
+        <p>Inicia sesión para agregar un comentario.</p>
+    {% endif %}
 
     <p class="mt-4">Volver a <a href="{% url 'lista_articulos' %}">Todos los artículos</a></p>
 </div>

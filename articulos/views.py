@@ -93,7 +93,7 @@ class VistaDetalleArticulo(FormMixin, DetailView):
         if form.is_valid():
             comentario = form.save(commit=False)
             comentario.articulo = self.object
-            comentario.usuario = self.request.user
+            comentario.autor = self.request.user
             comentario.save()
             messages.success(request, "¡Comentario agregado con éxito!")
             return redirect(self.get_success_url())

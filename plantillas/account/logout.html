@@ -1,6 +1,5 @@
 {% extends 'base.html' %}
 {% load crispy_forms_tags %}
-{% load socialaccount %}
 
 {% block titulo %}Cerrar Sesión{% endblock titulo %}
 
@@ -69,13 +68,6 @@
             <button class="btn btn-danger" type="submit">Salir</button>
         </form>
         <a href="{% url 'inicio' %}" class="cancel-link">Cancelar y regresar al inicio</a>
-
-        <!-- Botón de Google -->
-        <div class="d-flex justify-content-center mt-3">
-            <a href="{% provider_login_url 'google' %}" class="btn btn-outline-danger">
-                Iniciar sesión con Google
-            </a>
-        </div>
     </div>
 </div>
 {% endblock contenido %}
